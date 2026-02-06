@@ -15,6 +15,11 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
 
+  // === AUTH (no login required) ===
+  app.get("/api/auth/user", (_req, res) => {
+    res.json({ id: 1, firstName: "مدير", lastName: "النظام", email: "admin@potato.app", profileImageUrl: null });
+  });
+
   // === SUPPLIERS ===
   app.get(api.suppliers.list.path, async (req, res) => {
     const suppliers = await storage.getSuppliers();
