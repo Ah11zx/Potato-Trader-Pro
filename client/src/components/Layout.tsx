@@ -27,14 +27,14 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const NavContent = () => (
-    <div className="flex flex-col h-full bg-card text-card-foreground">
+    <div className="flex flex-col h-full sidebar-gradient">
       <div className="p-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-          <Package className="text-white w-6 h-6" />
+        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/20">
+          <Package className="text-[#064e3b] w-6 h-6" />
         </div>
         <div>
-          <h1 className="font-bold text-xl tracking-tight">توزيع بطاطس</h1>
-          <p className="text-xs text-muted-foreground">نظام إدارة التوزيع</p>
+          <h1 className="font-bold text-xl tracking-tight text-white">توزيع بطاطس</h1>
+          <p className="text-xs text-emerald-100/70">نظام إدارة التوزيع</p>
         </div>
       </div>
       
@@ -43,13 +43,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           const isActive = location === item.href;
           return (
             <Link key={item.href} href={item.href} className={`
-              flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+              flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
               ${isActive 
-                ? "bg-primary text-primary-foreground shadow-md shadow-primary/25 translate-x-1" 
-                : "hover:bg-muted text-muted-foreground hover:text-foreground hover:translate-x-1"
+                ? "bg-white/15 text-white shadow-sm backdrop-blur-sm -translate-x-1" 
+                : "hover:bg-white/10 text-emerald-100/80 hover:text-white hover:-translate-x-1"
               }
             `}>
-              <item.icon className={`w-5 h-5 ${isActive ? "text-primary-foreground" : ""}`} />
+              <item.icon className={`w-5 h-5 ${isActive ? "text-white" : ""}`} />
               <span className="font-medium">{item.label}</span>
             </Link>
           );
@@ -57,22 +57,22 @@ export default function Layout({ children }: { children: ReactNode }) {
       </div>
 
       <div className="p-4 mt-auto">
-        <div className="bg-muted/50 rounded-2xl p-4 border border-border/50">
+        <div className="bg-white/10 rounded-2xl p-4 border border-white/10 backdrop-blur-sm">
           <div className="flex items-center gap-3 mb-3">
-            <Avatar className="h-10 w-10 border-2 border-background shadow-sm">
+            <Avatar className="h-10 w-10 border-2 border-white/20 shadow-sm">
               <AvatarImage src={user?.profileImageUrl || undefined} />
-              <AvatarFallback className="bg-primary/10 text-primary">
+              <AvatarFallback className="bg-white/20 text-white">
                 {user?.firstName?.[0] || "A"}
               </AvatarFallback>
             </Avatar>
             <div className="overflow-hidden">
-              <p className="text-sm font-semibold truncate">{user?.firstName || "المستخدم"}</p>
-              <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+              <p className="text-sm font-semibold truncate text-white">{user?.firstName || "المستخدم"}</p>
+              <p className="text-xs text-emerald-100/60 truncate">{user?.email}</p>
             </div>
           </div>
           <Button 
             variant="ghost" 
-            className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+            className="w-full justify-start text-emerald-100 hover:text-white hover:bg-white/10"
             onClick={() => logout()}
           >
             <LogOut className="w-4 h-4 ml-2" />

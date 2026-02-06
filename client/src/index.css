@@ -36,9 +36,18 @@
   --input: 214 32% 91%;
   --ring: 158 64% 32%;
 
-  --radius: 0.75rem;
+  --radius: 0.875rem;
 
   --font-cairo: 'Cairo', sans-serif;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  .sidebar-gradient {
+    @apply bg-gradient-to-b from-[#064e3b] to-[#065f46] text-white;
+  }
 }
 
 @layer base {

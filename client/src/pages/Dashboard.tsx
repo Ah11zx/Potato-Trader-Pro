@@ -72,48 +72,56 @@ export default function Dashboard() {
 
       {/* AI Insights Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border-primary/20 bg-gradient-to-br from-card to-primary/5">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <BrainCircuit className="w-6 h-6 text-primary" />
-              <CardTitle>تحليلات الذكاء الاصطناعي</CardTitle>
+        <Card className="lg:col-span-2 glass-card border-primary/30 relative overflow-hidden group">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+          <CardHeader className="pb-2">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <BrainCircuit className="w-6 h-6 text-primary animate-pulse" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-black tracking-tight">المساعد الذكي (AI)</CardTitle>
+                <CardDescription className="text-xs font-medium">رؤى احترافية من بياناتك الحقيقية</CardDescription>
+              </div>
             </div>
-            <CardDescription>رؤى ذكية لتحسين التدفق النقدي والمخزون</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-4">
             {loadingAI ? (
               <div className="space-y-4">
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-20 w-full rounded-xl" />
+                <div className="grid grid-cols-2 gap-4">
+                  <Skeleton className="h-32 rounded-xl" />
+                  <Skeleton className="h-32 rounded-xl" />
+                </div>
               </div>
             ) : (
               <>
-                <div className="p-4 bg-white/50 rounded-xl border border-primary/10 backdrop-blur-sm">
-                  <h4 className="font-semibold text-primary mb-2 flex items-center">
+                <div className="p-5 bg-primary/5 rounded-2xl border border-primary/10 shadow-inner group-hover:bg-primary/10 transition-colors duration-500">
+                  <h4 className="font-bold text-primary mb-3 flex items-center text-sm uppercase tracking-wider">
                     <TrendingUp className="w-4 h-4 ml-2" />
                     توقعات التدفق النقدي
                   </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                     {ai?.cashFlowForecast || "جاري تحليل البيانات المالية..."}
                   </p>
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-orange-50 rounded-xl border border-orange-100">
-                    <h4 className="font-semibold text-orange-700 mb-2 flex items-center">
+                  <div className="p-5 bg-destructive/5 rounded-2xl border border-destructive/10 hover:bg-destructive/10 transition-colors duration-500">
+                    <h4 className="font-bold text-destructive mb-3 flex items-center text-sm uppercase tracking-wider">
                       <AlertTriangle className="w-4 h-4 ml-2" />
                       تحليل المخاطر
                     </h4>
-                    <p className="text-sm text-orange-600/90 leading-relaxed">
+                    <p className="text-sm text-destructive/90 leading-relaxed font-medium">
                       {ai?.riskAnalysis || "لا توجد مخاطر حالية."}
                     </p>
                   </div>
-                  <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
-                    <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
+                  <div className="p-5 bg-blue-500/5 rounded-2xl border border-blue-500/10 hover:bg-blue-500/10 transition-colors duration-500">
+                    <h4 className="font-bold text-blue-600 mb-3 flex items-center text-sm uppercase tracking-wider">
                       <Package className="w-4 h-4 ml-2" />
                       نصائح المخزون
                     </h4>
-                    <p className="text-sm text-blue-600/90 leading-relaxed">
+                    <p className="text-sm text-blue-600/90 leading-relaxed font-medium">
                       {ai?.inventoryAdvice || "المخزون في حالة جيدة."}
                     </p>
                   </div>
@@ -124,32 +132,35 @@ export default function Dashboard() {
         </Card>
 
         {/* Low Stock Alert */}
-        <Card>
+        <Card className="glass-card shadow-lg border-white/40">
           <CardHeader>
-            <CardTitle>تنبيهات النواقص</CardTitle>
-            <CardDescription>أصناف وصلت لحد الطلب</CardDescription>
+            <CardTitle className="text-lg font-bold tracking-tight">تنبيهات النواقص</CardTitle>
+            <CardDescription className="text-xs">تحرك سريعاً لتجنب نفاد الكمية</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {metrics?.lowStockProducts.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  جميع الأصناف متوفرة
+                <div className="text-center py-10">
+                  <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
+                    <Package className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm font-bold text-muted-foreground">المخزون آمن</p>
                 </div>
               ) : (
                 metrics?.lowStockProducts.map((p: any) => (
-                  <div key={p.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                  <div key={p.id} className="flex items-center justify-between p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 hover:bg-orange-500/10 transition-all duration-300">
                     <div>
-                      <p className="font-semibold">{p.name}</p>
-                      <p className="text-xs text-muted-foreground">المتبقي: {p.currentStock} {p.unit}</p>
+                      <p className="font-bold text-sm">{p.name}</p>
+                      <p className="text-[10px] font-black text-orange-600/70 uppercase tracking-widest mt-0.5">المتبقي: {p.currentStock} {p.unit}</p>
                     </div>
-                    <Button size="sm" variant="outline" className="h-8">
+                    <Button size="sm" variant="outline" className="h-8 rounded-lg border-orange-500/20 hover:bg-orange-500/10 hover:text-orange-600 text-xs font-bold">
                       طلب
                     </Button>
                   </div>
                 ))
               )}
             </div>
-            <Button variant="ghost" className="w-full mt-4 text-primary" asChild>
+            <Button variant="ghost" className="w-full mt-6 text-primary hover:bg-primary/5 font-bold text-sm transition-colors rounded-xl" asChild>
               <Link href="/inventory">
                 عرض المخزون بالكامل
                 <ArrowUpRight className="w-4 h-4 mr-2" />
